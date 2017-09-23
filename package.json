@@ -1,0 +1,13 @@
+{
+  "name": "dawanda-ratings",
+  "version": "1.0.0",
+  "description": "lambda fetching ratings from dawanda",
+  "main": "index.js",
+  "repository": "github.com/ruppertdesign/dawanda-ratings",
+  "author": "Florian Hirsch",
+  "license": "MIT",
+  "private": false,
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.2"
+  }
+}
