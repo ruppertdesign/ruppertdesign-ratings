@@ -5,11 +5,26 @@ const cheerio = require('cheerio');
 
 exports.handler = (event, context, callback) => {
 
-  const uri = 'https://de.dawanda.com/user/ruppertdesign';
+  const options = {
+    method: 'GET',
+    protocol: 'https:',
+    hostname: 'www.etsy.com',
+    path: '/de/shop/RUPPERTdesign/reviews',
+    headers: {
+      'Authority': 'www.etsy.com',
+      'Pragma': 'no-cache' ,
+      'Cache-Control': 'no-cache',
+      'Upgrade-Insecure-Requests': '1',
+      'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.99 Safari/537.36',
+      'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+      'Accept-Language': 'de-DE,de;q=0.9,en-US;q=0.8,en;q=0.7'
+      // 'Accept-Encoding': 'gzip, deflate, br'
+    }
+  };
 
-  https.get(uri, response => {
+  https.get(options, response => {
     const { statusCode } = response;
-    console.info(statusCode)
+    console.info(`[${statusCode}] ${options.path}`)
     if (statusCode !== 200) {
       callback(new Error(`Fetching ratings failed with status: ${statusCode}`));
     } else {
@@ -18,12 +33,16 @@ exports.handler = (event, context, callback) => {
       response.on('data', (chunk) => { rawData += chunk; });
       response.on('end', () => {
         const $ = cheerio.load(rawData);
-        const rating = $('.rating .average').text();
-        const votes = $('.votes').text();
-        callback(null, {
+        const reviewsSection = $('.reviews-section .reviews-total')
+        const rating = Math.round($('input[name=rating]', reviewsSection).val())
+        const text = reviewsSection.text()
+        const votes = /\(([0-9]+?)\)/.exec(text)[1]
+        const result = {
           rating,
           votes,
-        });
+        };
+        console.info(result)
+        callback(null, result);
       });
     }
   });
