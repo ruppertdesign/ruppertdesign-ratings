@@ -10,12 +10,12 @@ exports.handler = async () => {
       path: '/de/shop/RUPPERTdesign',
       headers: {
         'Authority': 'www.etsy.com',
-        'Pragma': 'no-cache' ,
+        'Pragma': 'no-cache',
         'Cache-Control': 'no-cache',
         'Upgrade-Insecure-Requests': '1',
-        'User-Agent': 'Mozilla/5.0 (Macintosh Intel Mac OS X 10_13_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.99 Safari/537.36',
+        'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36',
         'Accept': 'text/html,application/xhtml+xml,application/xmlq=0.9,image/webp,image/apng,*/*q=0.8',
-        'Accept-Language': 'de-DE,deq=0.9,en-USq=0.8,enq=0.7'
+        'Accept-Language': 'de-DE,deq=0.9,en-USq=0.8,enq=0.7',
       }
     }
     https.get(options, response => {
